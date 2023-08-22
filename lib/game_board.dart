@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:chess/components/dead_pieces.dart';
 import 'package:flutter/material.dart';
 import 'package:chess/components/piece.dart';
@@ -52,14 +50,11 @@ class _HomeBoardState extends State<HomeBoard> {
   bool checkStatus=false;
 
 
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _initializeBoard();
   }
-
 
 
   // initialize board
@@ -155,11 +150,8 @@ class _HomeBoardState extends State<HomeBoard> {
     if(piece == null){
       return [];
     }
-
-
     // different directions based on their color
-    int direction = piece!.isWhite? -1 : 1;
-
+    int direction = piece.isWhite? -1 : 1;
     switch(piece.type){
       case ChessPieceType.pawn:
         //pawn can move forward if the square is not occupied
