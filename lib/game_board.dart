@@ -566,6 +566,7 @@ class _HomeBoardState extends State<HomeBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       backgroundColor: backgroundColor,
       body: Column(
         children: [
@@ -584,6 +585,7 @@ class _HomeBoardState extends State<HomeBoard> {
           ),
           ),
 
+
           //Game status
           Text(
             checkStatus ? "CHECK!" : ""
@@ -594,40 +596,49 @@ class _HomeBoardState extends State<HomeBoard> {
           //chess board
           Expanded(
             flex: 3,
-            child: GridView.builder(
-                itemCount: 8 * 8,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate:
-                const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 8),
-                itemBuilder: (constext , index){
+              child: Container(
+                decoration:  BoxDecoration(
+                  border: Border.all(color: Colors.black,
+                    width: 5,
+                  ),
+                ),
+                child: GridView.builder(
+                  padding: const EdgeInsets.only(top: 40),
+                    itemCount: 8 * 8,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 8),
+                    itemBuilder: (context , index){
 
-                  //get the row and col position of this square
-                  int row = index ~/ 8 ;
-                  int col = index % 8 ;
+                      //get the row and col position of this square
+                      int row = index ~/ 8 ;
+                      int col = index % 8 ;
 
-                  //check if this square is selected
-                  bool isSelected = selectedRow == row && selectedcol ==col;
+                      //check if this square is selected
+                      bool isSelected = selectedRow == row && selectedcol ==col;
 
-                  //check if this square is a valid move
-                  bool isValidMove =false;
-                  for (var position in validMoves){
+                      //check if this square is a valid move
+                      bool isValidMove =false;
+                      for (var position in validMoves){
 
-                  //compare row and col
-                    if (position[0] == row && position[1] == col){
-                      isValidMove =true;
+                      //compare row and col
+                        if (position[0] == row && position[1] == col){
+                          isValidMove =true;
+                        }
+                      }
+
+                      return Square(
+                        isWhite: isWhite(index),
+                        piece:board[row][col] ,
+                        isSelected: isSelected ,
+                        onTap: () =>pieceSelected(row, col),
+                        isValidMove:isValidMove ,
+
+                      );
                     }
-                  }
+                ),
+              ),
 
-                  return Square(
-                    isWhite: isWhite(index),
-                    piece:board[row][col] ,
-                    isSelected: isSelected ,
-                    onTap: () =>pieceSelected(row, col),
-                    isValidMove:isValidMove ,
-
-                  );
-                }
-            ),
           ),
 
           //black pieces taken
